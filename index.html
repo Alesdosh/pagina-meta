@@ -16,80 +16,313 @@
     <title>Meta Tags</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: sans-serif;
             margin: 0;
-            padding: 0;
-            background: linear-gradient(to right, #000428, #004e92);
-            color: white;
+            overflow: hidden; /* Mantenemos hidden para la animación 3D */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Usamos min-height para contenido largo */
+            background-color: linear-gradient(135deg, #0a0a2a 0%, #1a3a8f 100%);
+            transition: background 1s ease-in-out;
         }
+
+        body.show-content {
+            background: linear-gradient(135deg, #0a0a2a 0%, #1a3a8f 100%);
+        }
+
+        #content {
+            position: absolute;
+            width: 100%;
+            height: 100vh; /* Ocupa toda la altura visible */
+            overflow-y: auto; /* Permite desplazamiento vertical */
+            color: #fff;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            z-index: 1; /* Asegura que esté sobre el canvas de Three.js */
+        }
+
         .container {
-            width: 80%;
-            margin: auto;
+            width: 90%; /* Ancho más amplio */
+            max-width: 800px; /* Límite máximo para mejor lectura */
+            margin: 50px auto; /* Espaciado superior e inferior */
             padding: 20px;
-        }
-        .header {
-            text-align: center;
-            padding: 50px 0;
-        }
-        .header {
-            color: #1e40af;
-        }
-        .content {
-            background: white;
-            color: black;
-            padding: 20px;
+            background: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
             border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
+
+        .content {
+            padding: 20px;
+            color: #000; /* Texto negro para mejor contraste */
+        }
+
+        /* Añadir márgenes a los elementos de lista */
+        li {
+            margin: 15px 0;
+        }
+
         h2 {
-            color: #1e40af;
+            color: blue;
         }
+
         h1 {
-            color: white;
+            color: black;
+        }
+
+        .autor {
+            color: black;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Meta Tags</h1>
-            <p>Por Alejandro Guadalupe Reyna Lujan</p>
-        </div>
-        <div class="content">
-            <h2>¿Qué son las Meta tags?</h2>
-            <p>Son fragmentos de código HTML que proporcionan información sobre una página web a los navegadores y motores de búsqueda.</p>
-            <p>No se muestran en la página visible para los usuarios, pero juegan un papel clave en el SEO.</p>
-            <p>El SEO es la optimización para motores de búsqueda que tienen que usar las páginas para salir bien posicionadas en el navegador.</p>
-            
-            <h2>¿Para qué se usan?</h2>
-            <p>Ayudan a los motores de búsqueda a entender el contenido de la página y mejorar su posicionamiento.</p>
-            <p>Pueden definir cómo se muestra una página en los buscadores o en redes sociales.</p>
-            <p>Permiten configurar aspectos como el idioma de la página o la compatibilidad con dispositivos móviles.</p>
-            
-            <h2>¿Cómo se usan?</h2>
-            <p>Las meta tags se tienen que utilizar dentro de la etiqueta <code>&lt;head&gt;</code> de la página HTML.</p>
-            <pre>
-&lt;meta charset="UTF-8"&gt;  <!-- para codificación de caracteres -->
-&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;  <!-- diseño responsive -->
-&lt;meta name="keywords" content="meta tags, HTML, SEO, desarrollo web"&gt;  <!-- palabras clave -->
-&lt;meta http-equiv="Content-Language" content="es"&gt;  <!-- idioma de la página -->
-            </pre>
-            
-            <h2>Parte 2: Preguntas de Reflexión</h2>
-            <ul>
-                <li><strong>¿Por qué es importante incluir el meta tag <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code>?</strong>
-                    <p>Este meta tag permite que la página se adapte correctamente a dispositivos móviles, mejorando la experiencia del usuario y asegurando una visualización adecuada en diferentes tamaños de pantalla.</p>
-                </li>
-                <li><strong>¿Cómo ayudan los meta tags a mejorar el posicionamiento en Google?</strong>
-                    <p>Los meta tags proporcionan información clave sobre el contenido de la página a los motores de búsqueda, lo que facilita su indexación y mejora su ranking en los resultados de búsqueda.</p>
-                </li>
-                <li><strong>¿Qué sucede si no se incluye una meta tag description en la página?</strong>
-                    <p>Si no se incluye una meta tag description, los motores de búsqueda generan una descripción automática basada en el contenido de la página, lo que puede afectar negativamente la atracción de usuarios y el CTR (Click-Through Rate).</p>
-                </li>
-                <li><strong>¿Cómo los meta tags Open Graph mejoran la forma en que se comparte una página en Facebook?</strong>
-                    <p>Los meta tags Open Graph permiten definir el título, descripción e imagen que aparecerán al compartir una página en Facebook, asegurando una presentación más atractiva y profesional.</p>
-                </li>
-            </ul>
+    <div id="content">
+        <div class="container">
+            <div class="header">
+                <h1>Meta Tags</h1>
+                <p class="autor">Por Alejandro Guadalupe Reyna Lujan</p>
+            </div>
+            <div class="content">
+                <h2>¿Qué son las Meta tags?</h2>
+                <p>Son fragmentos de código HTML que proporcionan información sobre una página web a los navegadores y motores de búsqueda.</p>
+                <p>No se muestran en la página visible para los usuarios, pero juegan un papel clave en el SEO.</p>
+                <p>El SEO es la optimización para motores de búsqueda que tienen que usar las páginas para salir bien posicionadas en el navegador.</p>
+                
+                <h2>¿Para qué se usan?</h2>
+                <p>Ayudan a los motores de búsqueda a entender el contenido de la página y mejorar su posicionamiento.</p>
+                <p>Pueden definir cómo se muestra una página en los buscadores o en redes sociales.</p>
+                <p>Permiten configurar aspectos como el idioma de la página o la compatibilidad con dispositivos móviles.</p>
+                
+                <h2>¿Cómo se usan?</h2>
+                <p>Las meta tags se tienen que utilizar dentro de la etiqueta <code>&lt;head&gt;</code> de la página HTML.</p>
+                <pre>
+    &lt;meta charset="UTF-8"&gt;  <!-- para codificación de caracteres -->
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;  <!-- diseño responsive -->
+    &lt;meta name="keywords" content="meta tags, HTML, SEO, desarrollo web"&gt;  <!-- palabras clave -->
+    &lt;meta http-equiv="Content-Language" content="es"&gt;  <!-- idioma de la página -->
+                </pre>
+                
+                <h2>Parte 2: Preguntas de Reflexión</h2>
+                <ul>
+                    <li><strong>¿Por qué es importante incluir el meta tag <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code>?</strong>
+                        <p>Este meta tag permite que la página se adapte correctamente a dispositivos móviles, mejorando la experiencia del usuario y asegurando una visualización adecuada en diferentes tamaños de pantalla.</p>
+                    </li>
+                    <li><strong>¿Cómo ayudan los meta tags a mejorar el posicionamiento en Google?</strong>
+                        <p>Los meta tags proporcionan información clave sobre el contenido de la página a los motores de búsqueda, lo que facilita su indexación y mejora su ranking en los resultados de búsqueda.</p>
+                    </li>
+                    <li><strong>¿Qué sucede si no se incluye una meta tag description en la página?</strong>
+                        <p>Si no se incluye una meta tag description, los motores de búsqueda generan una descripción automática basada en el contenido de la página, lo que puede afectar negativamente la atracción de usuarios y el CTR (Click-Through Rate).</p>
+                    </li>
+                    <li><strong>¿Cómo los meta tags Open Graph mejoran la forma en que se comparte una página en Facebook?</strong>
+                        <p>Los meta tags Open Graph permiten definir el título, descripción e imagen que aparecerán al compartir una página en Facebook, asegurando una presentación más atractiva y profesional.</p>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Configuración básica de la escena
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Crear el Sol
+        const sunGeometry = new THREE.SphereGeometry(5, 32, 32);
+        const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xFFD700 });
+        const sun = new THREE.Mesh(sunGeometry, sunMaterial);
+        scene.add(sun);
+
+        // Crear Mercurio
+        const mercuryGeometry = new THREE.SphereGeometry(0.4, 32, 32);
+        const mercuryMaterial = new THREE.MeshStandardMaterial({ color: 0x808080 });
+        const mercury = new THREE.Mesh(mercuryGeometry, mercuryMaterial);
+        mercury.position.set(5, 0, 0);
+        scene.add(mercury);
+
+        // Crear Venus
+        const venusGeometry = new THREE.SphereGeometry(0.8, 32, 32);
+        const venusMaterial = new THREE.MeshStandardMaterial({ color: 0xFFD700 });
+        const venus = new THREE.Mesh(venusGeometry, venusMaterial);
+        venus.position.set(7, 0, 0);
+        scene.add(venus);
+
+        // Crear la Tierra
+        const earthGeometry = new THREE.SphereGeometry(1, 32, 32);
+        const earthMaterial = new THREE.MeshStandardMaterial({ color: 0x0077be });
+        const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+        earth.position.set(10, 0, 0);
+        scene.add(earth);
+
+        // Crear Marte
+        const marsGeometry = new THREE.SphereGeometry(0.6, 32, 32);
+        const marsMaterial = new THREE.MeshStandardMaterial({ color: 0xFF4500 });
+        const mars = new THREE.Mesh(marsGeometry, marsMaterial);
+        mars.position.set(13, 0, 0);
+        scene.add(mars);
+
+        // Crear Júpiter
+        const jupiterGeometry = new THREE.SphereGeometry(2, 32, 32);
+        const jupiterMaterial = new THREE.MeshStandardMaterial({ color: 0xFFD700 });
+        const jupiter = new THREE.Mesh(jupiterGeometry, jupiterMaterial);
+        jupiter.position.set(18, 0, 0);
+        scene.add(jupiter);
+
+        // Crear Saturno
+        const saturnGeometry = new THREE.SphereGeometry(1.5, 32, 32);
+        const saturnMaterial = new THREE.MeshStandardMaterial({ color: 0xFFD700 });
+        const saturn = new THREE.Mesh(saturnGeometry, saturnMaterial);
+        saturn.position.set(23, 0, 0);
+        scene.add(saturn);
+
+        // Crear Urano
+        const uranusGeometry = new THREE.SphereGeometry(1, 32, 32);
+        const uranusMaterial = new THREE.MeshStandardMaterial({ color: 0x00FFFF });
+        const uranus = new THREE.Mesh(uranusGeometry, uranusMaterial);
+        uranus.position.set(28, 0, 0);
+        scene.add(uranus);
+
+        // Crear Neptuno
+        const neptuneGeometry = new THREE.SphereGeometry(1, 32, 32);
+        const neptuneMaterial = new THREE.MeshStandardMaterial({ color: 0x0000FF });
+        const neptune = new THREE.Mesh(neptuneGeometry, neptuneMaterial);
+        neptune.position.set(33, 0, 0);
+        scene.add(neptune);
+
+        // Crear las órbitas de los planetas
+        const createOrbit = (radius) => {
+            const orbitGeometry = new THREE.CircleGeometry(radius, 64);
+            const orbitMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
+            const orbit = new THREE.Line(orbitGeometry, orbitMaterial);
+            orbit.rotation.x = Math.PI / 2;
+            scene.add(orbit);
+        };
+
+        createOrbit(5);   // Mercurio
+        createOrbit(7);   // Venus
+        createOrbit(10);  // Tierra
+        createOrbit(13);  // Marte
+        createOrbit(18);  // Júpiter
+        createOrbit(23);  // Saturno
+        createOrbit(28);  // Urano
+        createOrbit(33);  // Neptuno
+
+        // Configuración de la luz
+        const light = new THREE.PointLight(0xFFFFFF, 1, 100);
+        light.position.set(10, 10, 10);
+        scene.add(light);
+
+        // Posición de la cámara
+        camera.position.z = 50;
+
+        // Animación
+        let mercuryOrbitAngle = 0;
+        let venusOrbitAngle = 0;
+        let earthOrbitAngle = 0;
+        let marsOrbitAngle = 0;
+        let jupiterOrbitAngle = 0;
+        let saturnOrbitAngle = 0;
+        let uranusOrbitAngle = 0;
+        let neptuneOrbitAngle = 0;
+        let sunRotationAngle = 0;
+        let systemRotationAngle = 0;
+        let sunExplosion = false;
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Rotación de los planetas alrededor del Sol
+            mercuryOrbitAngle += 0.04;
+            mercury.position.x = Math.cos(mercuryOrbitAngle) * 5;
+            mercury.position.z = Math.sin(mercuryOrbitAngle) * 5;
+
+            venusOrbitAngle += 0.03;
+            venus.position.x = Math.cos(venusOrbitAngle) * 7;
+            venus.position.z = Math.sin(venusOrbitAngle) * 7;
+
+            earthOrbitAngle += 0.02;
+            earth.position.x = Math.cos(earthOrbitAngle) * 10;
+            earth.position.z = Math.sin(earthOrbitAngle) * 10;
+
+            marsOrbitAngle += 0.015;
+            mars.position.x = Math.cos(marsOrbitAngle) * 13;
+            mars.position.z = Math.sin(marsOrbitAngle) * 13;
+
+            jupiterOrbitAngle += 0.01;
+            jupiter.position.x = Math.cos(jupiterOrbitAngle) * 18;
+            jupiter.position.z = Math.sin(jupiterOrbitAngle) * 18;
+
+            saturnOrbitAngle += 0.008;
+            saturn.position.x = Math.cos(saturnOrbitAngle) * 23;
+            saturn.position.z = Math.sin(saturnOrbitAngle) * 23;
+
+            uranusOrbitAngle += 0.006;
+            uranus.position.x = Math.cos(uranusOrbitAngle) * 28;
+            uranus.position.z = Math.sin(uranusOrbitAngle) * 28;
+
+            neptuneOrbitAngle += 0.005;
+            neptune.position.x = Math.cos(neptuneOrbitAngle) * 33;
+            neptune.position.z = Math.sin(neptuneOrbitAngle) * 33;
+
+            // Rotación de los planetas sobre su eje
+            mercury.rotation.y += 0.04;
+            venus.rotation.y += 0.03;
+            earth.rotation.y += 0.02;
+            mars.rotation.y += 0.015;
+            jupiter.rotation.y += 0.01;
+            saturn.rotation.y += 0.008;
+            uranus.rotation.y += 0.006;
+            neptune.rotation.y += 0.005;
+
+            // Rotación del Sol
+            sunRotationAngle += 0.005;
+            sun.rotation.y = sunRotationAngle;
+
+            // Rotación del sistema completo en el eje X
+            systemRotationAngle += 0.002;
+            scene.rotation.x = systemRotationAngle;
+
+            // Explosión del Sol después de 10 segundos
+            if (!sunExplosion && Date.now() - startTime > 10000) {
+                sunExplosion = true;
+                explodeSun();
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        function explodeSun() {
+            const explosionDuration = 2000; // 2 segundos
+            const startScale = sun.scale.x;
+            const endScale = 10;
+            const startTime = Date.now();
+
+            function explosionAnimation() {
+                const elapsedTime = Date.now() - startTime;
+                const t = Math.min(elapsedTime / explosionDuration, 1);
+                sun.scale.set(startScale + (endScale - startScale) * t, startScale + (endScale - startScale) * t, startScale + (endScale - startScale) * t);
+
+                if (t < 1) {
+                    requestAnimationFrame(explosionAnimation);
+                } else {
+                    // Eliminar todos los objetos 3D de la escena
+                    while (scene.children.length > 0) {
+                        scene.remove(scene.children[0]);
+                    }
+                    // Mostrar contenido después de la explosión
+                    document.getElementById('content').style.opacity = '1';
+                    // Cambiar el fondo a gradiente azul
+                    document.body.classList.add('show-content');
+                }
+            }
+
+            explosionAnimation();
+        }
+
+        const startTime = Date.now();
+        animate();
+    </script>
 </body>
 </html>
